@@ -1,15 +1,13 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\BookAuthorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookAuthorController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
