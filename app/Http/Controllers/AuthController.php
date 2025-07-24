@@ -13,23 +13,22 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
-    {
-        $credentials = $request->validated();
+{
+    $credentials = $request->validated();
 
+    $user = User::whereRaw('BINARY name = ?', [$credentials['name']])->first();
 
-        $user = User::whereRaw('BINARY email = ?', [$credentials['email']])->first();
-        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => 'email atau password salah.',
-            ]);
-        }
-
-
-        return response()->json([
-            'token' => $user->createToken('mobile-token')->plainTextToken,
-            'user' => $user,
+    if (! $user || ! Hash::check($credentials['password'], $user->password)) {
+        throw ValidationException::withMessages([
+            'name' => 'Nama atau password salah.',
         ]);
     }
+
+    return response()->json([
+        'token' => $user->createToken('mobile-token')->plainTextToken,
+        'user' => $user,
+    ]);
+}
 
     public function logout(Request $request)
 {
